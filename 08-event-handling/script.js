@@ -18,5 +18,10 @@ Vue.createApp({
     showPosition(event) {
       (this.x = event.offsetX), (this.y = event.offsetY);
     },
+    removeFruit(fruitToRemove) {
+      this.fruitBasket = this.fruitBasket.filter((fruit) => {
+        return fruit !== fruitToRemove;
+      });
+    },
   },
 }).mount("#app");
