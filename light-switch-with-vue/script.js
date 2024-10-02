@@ -16,7 +16,7 @@
 Vue.createApp({
   data() {
     return {
-      onClassName: "darkmode",
+      modeClassName: "darkmode",
       isDarkmode: false,
       text: "",
     };
@@ -32,7 +32,7 @@ Vue.createApp({
       }
 
       document.title = this.text;
-      document.body.classList.toggle(this.onClassName);
+      document.body.classList.toggle(this.modeClassName);
     },
   },
 }).mount("#app");
