@@ -131,21 +131,48 @@
 Vue.createApp({
   data() {
     return {
+      selectedFilter: "all",
       todos: [],
-      todo: "",
+      newTodoText: "",
     };
   },
-
+  computed: {
+    filteredTodos() {
+      switch (this.selectedFilter) {
+        case "done":
+          return this.todos.filter((todo) => todo.checked);
+        case "open":
+          return this.todos.filter((todo) => !todo.checked);
+        default:
+          return this.todos;
+      }
+    },
+  },
   methods: {
     addTodo() {
-      if (this.todos.includes(this.todo.toLowerCase())) {
-        alert("todo already on list");
-      } else {
-        let newTodo = { text: this.todo.toLowerCase(), checked: false };
-        this.todos.push(newTodo);
+      if (this.newTodoText.length < 5) {
+        alert("Todo text must have at least 5 characters.");
+        return;
       }
-      this.todo = "";
+      const isDuplicate = this.todos.find(
+        (todo) => todo.text.toLowerCase() === this.newTodoText.toLowerCase()
+      );
+
+      if (this.isDuplicate) {
+        alert("todo already on list");
+        return;
+      }
+
+      const newTodo = {
+        id: "todo-" + Date.now(),
+        text: this.newTodoText,
+        checked: false,
+      };
+      this.todos.push(newTodo);
+
+      this.newTodoText = "";
     },
+
     removeDone() {
       this.todos = this.todos.filter((todo) => !todo.checked);
     },
